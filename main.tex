@@ -1,0 +1,151 @@
+\documentclass[a4paper, landscape, 12pt]{ltjsarticle}
+\usepackage{luatexja} %% https://ja.overleaf.com/learn/latex/Japanese#luatex-ja_package_bundle_with_LuaLaTeX
+
+\usepackage[top=20mm, bottom=10mm, left=10mm, right=10mm]{geometry} % 余白設定
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc, shapes, shadows}
+\usepackage{anyfontsize} % フォントサイズを自在に変える
+\usepackage{comment} % コメント用
+
+%%
+%% ここから本文
+%% 
+\begin{document}
+
+
+% --- タイトル部分 ---
+\begin{center}
+    {\fontsize{24pt}{0pt}\selectfont \textbf{特性要因図：ブレッドボードの回路が動かない}} \\[10pt]
+    
+    % --- 説明文 ---
+    \begin{minipage}{0.9\textwidth}
+        \large
+        \textbf{【デバッグの心得】} \\
+        回路が動かないときは、闇雲に配線を触るのではなく、\textbf{「原因の可能性が高い順（左側の①から）」}一つずつチェックしていくことが解決への近道です。
+        「たぶん大丈夫」という思い込みを捨てて、この図を指差し確認しながら進めましょう。
+    \end{minipage}
+\end{center}
+
+\vspace{5mm}
+
+% --- 特性要因図本体 ---
+\begin{tikzpicture}[
+    % デザイン定義
+    % 背骨 (メインの矢印)
+    spine/.style={
+        -Stealth,          % 矢印の形
+        line width=4pt, 
+        color=gray!80, 
+        >={Stealth[length=12mm]} % 矢印の頭を大きく
+    },
+    % 大骨 (カテゴリーの矢印)：背骨に向かう
+    rib/.style={
+        Stealth-,          % 始点(背骨側)に矢印をつける
+        line width=2.5pt, 
+        color=gray!80,
+        >={Stealth[length=8mm]}
+    },
+%    subrib/.style={-, line width=1pt},
+    % 小骨 (各項目の矢印)：大骨に向かう
+    subrib/.style={
+        Stealth-,          % 始点(大骨側)に矢印をつける
+        line width=1.5pt, 
+        color=black!80,
+        >={Stealth[length=5mm]}
+    },    
+%    label/.style={font=\bfseries, align=center},
+    % カテゴリーラベル
+    catlabel/.style={
+        font=\bfseries\huge, 
+        align=center, 
+        fill=white, 
+        draw=black!70, 
+        line width=1.5pt,
+        rounded corners=5pt,
+        inner sep=8pt,
+        drop shadow
+    },
+%    item/.style={font=\small, anchor=west}
+    % チェック項目
+    item/.style={font=\bfseries, anchor=west}
+]
+
+\begin{comment}
+
+\begin{tikzpicture}[
+    % デザイン定義
+    spine/.style={->, line width=2pt, >={Stealth[length=5mm]}},
+    rib/.style={line width=1.5pt, color=gray!80},
+    subrib/.style={-, line width=1pt},
+    label/.style={font=\bfseries, align=center},
+    item/.style={font=\small, anchor=west}
+]
+\end{comment}
+
+    % --- 背骨（メインストリーム） ---
+    \draw[spine] (0, 0) -- (20, 0) node[right, draw, fill=red!10, text width=5cm, align=center, rounded corners] {\large 回路が\\動かない};
+
+    % --- 大骨（カテゴリー）の設定 ---
+    % 上側
+    \coordinate (c1) at (2, 0);     \coordinate (top1) at (1,   5);
+    \coordinate (c2) at (10, 0);    \coordinate (top2) at (9,   5);
+    \coordinate (c5) at (18, 0);    \coordinate (top3) at (17,  5);
+    
+    % 下側
+    \coordinate (c3) at (4, 0);     \coordinate (btm1) at (3,  -5);
+    \coordinate (c4) at (12, 0);    \coordinate (btm2) at (11, -5);
+
+    % --- 描画と項目の追加 ---
+
+    % =============================================
+    % ① 電源・GND（左上） - 最優先チェック
+    % =============================================
+    \draw[rib] (c1) -- (top1) node[above, label] {① 電源・GND};
+    \draw[subrib] ($(c1)!0.8!(top1)$) -- ++(1.5, 0) node[item] {電池切れ・スイッチ入れ忘れ};
+    \draw[subrib] ($(c1)!0.6!(top1)$) -- ++(1.5, 0) node[item] {極性(＋−)逆};
+    \draw[subrib] ($(c1)!0.4!(top1)$) -- ++(1.5, 0) node[item] {GND共通化忘れ};        \draw[subrib] ($(c1)!0.2!(top1)$) -- ++(1.5, 0) node[item] {電圧ミス};
+
+
+    % 2. 配線・接触（左下）
+    \draw[rib] (c3) -- (btm1) node[below, label] {② 配線・接触};
+    \draw[subrib] ($(c3)!0.8!(btm1)$) -- ++(1.5, 0) node[item] {穴の1列ずれ};
+    \draw[subrib] ($(c3)!0.6!(btm1)$) -- ++(1.5, 0) node[item] {奥まで刺さってない};
+    \draw[subrib] ($(c3)!0.4!(btm1)$) -- ++(1.5, 0) node[item] {ジャンパー断線};
+
+    % =============================================
+    % ③ 部品（右上）
+    % =============================================
+    \draw[rib] (c2) -- (top2) node[above, label] {③ 部品};
+    \draw[subrib] ($(c2)!0.8!(top2)$) -- ++(1.5, 0) node[item] {LED/コンデンサ極性};
+    \draw[subrib] ($(c2)!0.6!(top2)$) -- ++(1.5, 0) node[item] {ICのピン配置};
+    \draw[subrib] ($(c2)!0.4!(top2)$) -- ++(1.5, 0) node[item] {抵抗値の間違い};
+
+    % =============================================
+    % ④ 設計・知識（右下）
+    % =============================================
+    \draw[rib] (c4) -- (btm2) node[below, label] {④ 設計・知識};
+    \draw[subrib] ($(c4)!0.8!(btm2)$) -- ++(1.5, 0) node[item] {回路図が間違えている};
+    \draw[subrib] ($(c4)!0.6!(btm2)$) -- ++(1.5, 0) node[item] {周波数・タイミングチャート};
+    \draw[subrib] ($(c4)!0.4!(btm2)$) -- ++(1.5, 0) node[item] {電流(が足らない)};
+
+    % =============================================
+    % ⑤ Rasberry Pi 
+    % =============================================
+    \draw[rib] (c5) -- (top3) node[above, label] {⑤ プロセッサ};
+    \draw[subrib] ($(c5)!0.8!(top3)$) -- ++(1.5, 0) node[item] {ソフトウェアが更新されてない};
+    \draw[subrib] ($(c5)!0.6!(top3)$) -- ++(1.5, 0) node[item] {ソフトウェアのバグ};
+    \draw[subrib] ($(c5)!0.4!(top3)$) -- ++(1.5, 0) node[item] {ピン指定が違う};
+
+
+
+\end{tikzpicture}
+
+%%
+%% 更新日を記入する
+%% 
+\vfill
+\hfill \small 更新日: \today 作成者：小泉直也
+
+
+\end{document}
+%\end{comment}
