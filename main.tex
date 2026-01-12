@@ -24,8 +24,8 @@
     \begin{minipage}{0.9\textwidth}
         \large
         \textbf{【デバッグの心得】} \\
-        回路が動かないときは、闇雲に配線を触るのではなく、\textbf{「原因の可能性が高い順（左側の①）」}に、一つずつチェックしていくことが解決への近道です。
-        「たぶん大丈夫」という思い込みを捨てて、コツコツと確認しながら進めましょう。
+        回路が動かないときは、\textbf{「原因の可能性が高い順（左側の①）」}から順番に、一つずつチェックしていくことが解決への近道です。
+        テスターを使いながら、１つ１つ確認しながら進めましょう。
     \end{minipage}
 \end{center}
 
@@ -70,17 +70,6 @@
     item/.style={font=\bfseries, anchor=west}
 ]
 
-\begin{comment}
-
-\begin{tikzpicture}[
-    % デザイン定義
-    spine/.style={->, line width=2pt, >={Stealth[length=5mm]}},
-    rib/.style={line width=1.5pt, color=gray!80},
-    subrib/.style={-, line width=1pt},
-    label/.style={font=\bfseries, align=center},
-    item/.style={font=\small, anchor=west}
-]
-\end{comment}
 
     % --- 背骨（メインストリーム） ---
     \draw[spine] (0, 0) -- (20, 0) node[right, draw, text width=5cm, align=center, rounded corners] {\Large 回路が\\動かない};
@@ -100,16 +89,16 @@
     % =============================================
     % ① 電源・GND（左上） - 最優先チェック
     % =============================================
-%    \draw[rib] (c1) -- (top1) node[above, label] {① 電源・GND};
     \draw[rib] (c1) -- (top1) node[above, catlabel] {① 電源・GND};
-    \draw[subrib] ($(c1)!0.8!(top1)$) -- ++(1.5, 0) node[item] {電池切れ・スイッチ入れ忘れ};
-    \draw[subrib] ($(c1)!0.6!(top1)$) -- ++(1.5, 0) node[item] {極性(＋−)逆};
-    \draw[subrib] ($(c1)!0.4!(top1)$) -- ++(1.5, 0) node[item] {GND共通化忘れ};     \draw[subrib] ($(c1)!0.2!(top1)$) -- ++(1.5, 0) node[item] {供給電圧が違う};
+    \draw[subrib] ($(c1)!0.85!(top1)$) -- ++(1.5, 0) node[item] {電池切れ・スイッチ入れ忘れ};
+    \draw[subrib] ($(c1)!0.65!(top1)$) -- ++(1.5, 0) node[item] {極性(＋−)逆};
+    \draw[subrib] ($(c1)!0.45!(top1)$) -- ++(1.5, 0) node[item] {GND共通化忘れ};     \draw[subrib] ($(c1)!0.25!(top1)$) -- ++(1.5, 0) node[item] {供給電圧が違う};
 
-
-    % 2. 配線・接触（左下）
-    \draw[rib] (c3) -- (btm1) node[below, catlabel] {② 配線・接触};
-    \draw[subrib] ($(c3)!0.8!(btm1)$) -- ++(1.5, 0) node[item] {穴の1列ずれ};
+    % =============================================
+    % ② 配線・接触（左下）
+    % =============================================
+    \draw[rib] (c3) -- (btm1) node[below, catlabel] {② 配線・接触不良};
+    \draw[subrib] ($(c3)!0.8!(btm1)$) -- ++(1.5, 0) node[item] {電源ラインが繋がってない};
     \draw[subrib] ($(c3)!0.6!(btm1)$) -- ++(1.5, 0) node[item] {奥まで刺さってない};
     \draw[subrib] ($(c3)!0.4!(btm1)$) -- ++(1.5, 0) node[item] {部品を逆挿している};
     \draw[subrib] ($(c3)!0.2!(btm1)$) -- ++(1.5, 0) node[item] {接続・配線の誤り};
@@ -118,10 +107,10 @@
     % ③ 部品（右上）
     % =============================================
     \draw[rib] (c2) -- (top2) node[above, catlabel] {③ 部品};
-    \draw[subrib] ($(c2)!0.8!(top2)$) -- ++(1.5, 0) node[item] {LED/コンデンサ極性};
-    \draw[subrib] ($(c2)!0.6!(top2)$) -- ++(1.5, 0) node[item] {ICのピン配置};
-    \draw[subrib] ($(c2)!0.4!(top2)$) -- ++(1.5, 0) node[item] {抵抗値・容量の間違い};
-    \draw[subrib] ($(c2)!0.2!(top2)$) -- ++(1.5, 0) node[item] {部品が違う};
+    \draw[subrib] ($(c2)!0.85!(top2)$) -- ++(1.5, 0) node[item] {LED/コンデンサ極性};
+    \draw[subrib] ($(c2)!0.65!(top2)$) -- ++(1.5, 0) node[item] {ICのピン配置};
+    \draw[subrib] ($(c2)!0.45!(top2)$) -- ++(1.5, 0) node[item] {抵抗値・容量の間違い};
+    \draw[subrib] ($(c2)!0.25!(top2)$) -- ++(1.5, 0) node[item] {部品が違う};
 
     % =============================================
     % ④ 設計・知識（右下）
@@ -129,18 +118,18 @@
     \draw[rib] (c4) -- (btm2) node[below, catlabel] {④ 設計・知識};
     \draw[subrib] ($(c4)!0.8!(btm2)$) -- ++(1.5, 0) node[item] {回路図を間違えている};
     \draw[subrib] ($(c4)!0.6!(btm2)$) -- ++(1.5, 0) node[item] {電流(が足らない)};
-    \draw[subrib] ($(c4)!0.4!(btm2)$) -- ++(1.5, 0) node[item] {ホゲホゲ};
-    \draw[subrib] ($(c4)!0.2!(btm2)$) -- ++(1.5, 0) node[item] {ホゲホゲ};
+    \draw[subrib] ($(c4)!0.4!(btm2)$) -- ++(1.5, 0) node[item] {ブレッドボードの使い方の誤り};
+    \draw[subrib] ($(c4)!0.2!(btm2)$) -- ++(1.5, 0) node[item] {プルアップ・パスコン};
 
 
     % =============================================
     % ⑤ Rasberry Pi 
     % =============================================
-    \draw[rib] (c5) -- (top3) node[above, catlabel] {⑤ プロセッサ};
-    \draw[subrib] ($(c5)!0.8!(top3)$) -- ++(1.5, 0) node[item] {ソフトウェアが更新されてない};
-    \draw[subrib] ($(c5)!0.6!(top3)$) -- ++(1.5, 0) node[item] {ソフトウェアのバグ};
-    \draw[subrib] ($(c5)!0.4!(top3)$) -- ++(1.5, 0) node[item] {ピン指定が違う};
-    \draw[subrib] ($(c5)!0.2!(btm2)$) -- ++(1.5, 0) node[item] {ホゲホゲ};
+    \draw[rib] (c5) -- (top3) node[above, catlabel] {⑤ マイコン};
+    \draw[subrib] ($(c5)!0.85!(top3)$) -- ++(1.5, 0) node[item] {ソフトが入ってない};
+    \draw[subrib] ($(c5)!0.65!(top3)$) -- ++(1.5, 0) node[item] {ソフトウェアのバグ};
+    \draw[subrib] ($(c5)!0.45!(top3)$) -- ++(1.5, 0) node[item] {ピン指定が違う};
+    \draw[subrib] ($(c5)!0.25!(top3)$) -- ++(1.5, 0) node[item] {電源が入ってない};
 
 
 
