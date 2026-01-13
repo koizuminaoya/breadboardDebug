@@ -6,6 +6,9 @@
 \usetikzlibrary{arrows.meta, positioning, calc, shapes, shadows}
 \usepackage{anyfontsize} % フォントサイズを自在に変える
 \usepackage{comment} % コメント用
+\usepackage{caption} % キャプションの図番号を取り除く
+\usepackage{graphicx} % URLにリンクする
+\usepackage[hidelinks]{hyperref}% URLのリンクの枠を消す
 
 % ▼▼▼ この1行でページ番号を消します ▼▼▼
 \pagestyle{empty}
@@ -152,6 +155,88 @@
 %% 
 \vfill
 \hfill \small 更新日: \today 作成者：小泉直也
+
+\newpage
+
+
+
+\begin{center}
+    {\fontsize{24pt}{0pt}\selectfont \textbf{回路初心者が見直すべき YouTube リスト}} \\[10pt]
+    
+    % --- 説明文 ---
+    \begin{minipage}{0.9\textwidth}
+        \large
+        \textbf{【知識の習得】} \\
+        回路でつまづいた時やわからないことがある時は、基本的な知識を見直しましょう。わからない時は、先輩や先生に相談して\textbf{原因追求の手順}を学びましょう。
+    \end{minipage}
+\end{center}
+
+
+
+
+
+\begin{figure}[ht]
+  \centering
+  \begin{minipage}[b]{0.24\columnwidth}
+    \centering
+    \includegraphics[width=45mm]{How2DMM.png}
+    \caption*{デジタルマルチメータ\\使い方}
+  \end{minipage}%
+  \hspace{2mm}%
+  \begin{minipage}[b]{0.24\columnwidth}
+    \centering
+    \includegraphics[width=45mm]{How2breadboard.png}
+    \caption*{ブレッドボードの使い方\\【初心者向け】}
+  \end{minipage}%
+  \hspace{2mm}%
+  \begin{minipage}[b]{0.24\columnwidth}
+    \centering
+    \includegraphics[width=45mm]{オシロスコープの基本的な使い方.png}
+    \caption*{オシロスコープの\\基本的な使い方}
+  \end{minipage}%
+  \hspace{2mm}%
+  \begin{minipage}[b]{0.24\columnwidth}
+    \centering
+    \includegraphics[width=45mm]{AWG電線のストリップ方法+コツの解説.png}
+    \caption*{電線のストリップ方法\\コツの解説}
+  \end{minipage}%
+
+\end{figure}
+
+% ----------------------------------------
+%
+% 下段
+%
+% ----------------------------------------
+\begin{figure}[ht]
+    \centering
+    
+    \begin{minipage}[b]{0.24\columnwidth}
+        \centering
+            \includegraphics[width=45mm]{テスターで回路の不具合を見つける方法.png}
+            \caption*{テスターを用いた\\回路チェック手順}
+    \end{minipage}%
+    \hspace{2mm}% 
+    \begin{minipage}[b]{0.24\columnwidth}
+        \centering
+        \includegraphics[width=45mm]{はんだ付け手順.png}
+        \caption*{はんだ付け手順\\初心者向け}
+    \end{minipage}%
+    \hspace{2mm}% 
+    \begin{minipage}[b]{0.24\columnwidth}
+        \centering
+        \includegraphics[width=45mm]{heatGun.png}%
+        \caption*{熱収縮チューブの使い方\\　}
+    \end{minipage}%
+    \hspace{2mm}%  
+    \begin{minipage}[b]{0.24\columnwidth}
+        \centering
+        \includegraphics[width=45mm]{XHコネクタ 取り付け方・外し方.png}%
+        \caption*{XHコネクタ圧着\\取り付け方法}%
+    \end{minipage}%
+\end{figure}
+
+
 
 
 \end{document}
