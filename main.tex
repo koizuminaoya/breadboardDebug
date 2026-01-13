@@ -37,14 +37,14 @@
     % 背骨 (メインの矢印)
     spine/.style={
         -Stealth,          % 矢印の形
-        line width=4pt, 
+        line width=3pt, 
         color=black!90, 
         >={Stealth[length=12mm]} % 矢印の頭を大きく
     },
     % 大骨 (カテゴリーの矢印)：背骨に向かう
     rib/.style={
         Stealth-,          % 始点(背骨側)に矢印をつける
-        line width=2.5pt, 
+        line width=2pt, 
         color=black!70,
         >={Stealth[length=8mm]}
     },
@@ -57,7 +57,7 @@
     },    
     % カテゴリーラベル
     catlabel/.style={
-        font=\bfseries\huge, 
+        font=\fontsize{16 pt}{22pt}\selectfont\bfseries,
         align=center, 
         fill=white, 
         draw=black!90, 
@@ -135,6 +135,18 @@
 
 \end{tikzpicture}
 
+%
+% QRコード埋め込み
+%  GitHub
+%  https://github.com/koizuminaoya/breadboardDebug
+\begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=south east,xshift=-10mm,yshift=20mm]
+    at (current page.south east)
+    {\includegraphics[width=40mm]{GitHub_breadboardDebug.png}};
+\end{tikzpicture}
+
+
+
 %%
 %% 更新日を記入する
 %% 
@@ -143,4 +155,4 @@
 
 
 \end{document}
-%\end{comment}
+
