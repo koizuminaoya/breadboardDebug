@@ -143,9 +143,19 @@
 %  GitHub
 %  https://github.com/koizuminaoya/breadboardDebug
 \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-10mm,yshift=20mm]
-    at (current page.south east)
-    {\href{https://github.com/koizuminaoya/breadboardDebug}{\includegraphics[width=40mm]{GitHub_breadboardDebug.png}}};
+  \node[anchor=south east,
+        xshift= -20mm,
+        yshift=  20mm] at (current page.south east)
+        {
+        \begin{minipage}{40mm}
+            \centering
+            \href{https://github.com/koizuminaoya/breadboardDebug}{
+            \includegraphics[width=40mm]{GitHub_breadboardDebug.png}
+            }
+            \vspace{1mm}
+            {\footnotesize 本資料のリポジトリ\\GitHub}
+        \end{minipage}
+        };
 \end{tikzpicture}
 
 
@@ -154,7 +164,7 @@
 %% 更新日を記入する
 %% 
 \vfill
-\hfill \small 更新日: \today 作成者：小泉直也
+\hfill \small 更新日: \today 
 
 \newpage
 
